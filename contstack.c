@@ -123,6 +123,7 @@ void stack_fenqueue(tdStack *s, void *d)
         s->tail = new_node;
     }
     s->size++;
+    printf("%p добавлен в стек %p\n", d, s);
 }
 
 // Освобождение памяти
