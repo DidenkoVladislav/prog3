@@ -1,8 +1,16 @@
 #include "contstack.h"
+#include "matrix2d.h"
 
 int main(void)
 {
-    int d1 = 5, d2 = 3, d3 = 7, d4 = 3;
+    Matrix2d *mat1, *mat2, *mat3, *mat4;
+
+    // Создание Matrix2d
+    mat1 = matrix2d_default_constructor();
+    mat2 = matrix2d_default_constructor();
+    mat3 = matrix2d_default_constructor();
+    mat4 = matrix2d_default_constructor();
+
     // Создание стека
     printf("Создадим стек s1 - ");
     tdStack *s1 = stack_create();
@@ -14,15 +22,15 @@ int main(void)
     puts("");
 
     puts("Добавим 2 элемента в стек s1");
-    stack_enqueue(s1, &d1);
-    stack_enqueue(s1, &d2);
+    stack_enqueue(s1, mat1);
+    stack_enqueue(s1, mat2);
     puts("Выведем стек s1");
     stack_print(s1);
 
     puts("");
 
     puts("Добавим элемент в начало стека s1");
-    stack_fenqueue(s1, &d3);
+    stack_fenqueue(s1, mat3);
     puts("Cтек s1");
     stack_print(s1);
 
@@ -65,7 +73,7 @@ int main(void)
     puts("");
 
     puts("Добавим элемент в стек s2");
-    stack_enqueue(s2, &d4);
+    stack_enqueue(s2, mat4);
     puts("Выведем стек s2");
     stack_print(s2);
 
@@ -93,12 +101,23 @@ int main(void)
     puts("Сравним it1 и it2");
     printf("it1 == it2: %d\n", stack_iterator_is_equal(it1, it2));
 
+    puts("");
+
+    puts("Получим структуру Matrix2d из итератора it2 и выведем её");
+    Matrix2d *mattest = stack_iterator_next(it2);
+    printf("%p\n", mattest);
+    show_matrix2d(mattest);
+
     // Освобождение памяти
     stack_free(s1);
     stack_free(s2);
     stack_free(s3);
     free(it1);
     free(it2);
+    destroy_matrix2d(mat1, 1);
+    destroy_matrix2d(mat2, 1);
+    destroy_matrix2d(mat3, 1);
+    destroy_matrix2d(mat4, 1);
 
     return EXIT_SUCCESS;
 }

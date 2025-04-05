@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-SRCS = contstack.c main.c
+SRCS = bitrgbled.c matrix2d.c contstack.c main.c
 
 all:
 	$(CC) $(CFLAGS) $(SRCS) -o main.out
