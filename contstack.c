@@ -13,11 +13,6 @@ tdStack *stack_create(void)
 // Добавление элемента в конец стека
 void stack_enqueue(tdStack *s, void *d)
 {
-    if (stack_is_full(s))
-    {
-        puts("Стек заполнен");
-        return;
-    }
     tdNode *new_node = calloc(1, sizeof(tdNode));
     if (new_node == NULL)
     {
@@ -38,12 +33,6 @@ void stack_enqueue(tdStack *s, void *d)
     }
     s->size++;
     printf("%p добавлен в стек %p\n", d, s);
-}
-
-// Проверка на заполненность
-bool stack_is_full(tdStack *s)
-{
-    return s->size >= MAX_STACK_CAPACITY;
 }
 
 // Вывод стека
@@ -120,11 +109,6 @@ void stack_clear(tdStack *s)
 // Добавление элемента в начало стека
 void stack_fenqueue(tdStack *s, void *d)
 {
-    if (stack_is_full(s))
-    {
-        perror("Стек заполнен\n");
-        return;
-    }
     tdNode *new_node = calloc(1, sizeof(tdNode));
     if (new_node == NULL)
     {

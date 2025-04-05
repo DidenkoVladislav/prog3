@@ -28,13 +28,6 @@ int main(void)
 
     puts("");
 
-    puts("Попробуем добавить элемент в заполненный стек s1");
-    stack_enqueue(s1, &d4);
-    puts("Cтек s1");
-    stack_print(s1);
-
-    puts("");
-
     puts("Выведем первый элемент стека s1");
     printf("%p\n", stack_peek(s1));
 
