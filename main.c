@@ -6,7 +6,7 @@ int main(void)
     // Создание стека
     printf("Создадим стек s1 - ");
     tdStack *s1 = stack_create();
-    printf("%p\n\n", s1);
+    printf("%p\n", s1);
 
     puts("Попробуем взять элемент из пустого стека s1");
     stack_peek(s1);
@@ -40,7 +40,7 @@ int main(void)
 
     puts("");
 
-    puts("Создадим копию стека s1");
+    printf("Создадим копию стека s1 s2");
     tdStack *s2 = stack_copy(s1);
     puts("Выведем оригинальный стек s1");
     stack_print(s1);
@@ -64,7 +64,7 @@ int main(void)
 
     puts("");
 
-    puts("Добавим элемента в стек s2");
+    puts("Добавим элемент в стек s2");
     stack_enqueue(s2, &d4);
     puts("Выведем стек s2");
     stack_print(s2);
