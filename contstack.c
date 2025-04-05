@@ -179,3 +179,56 @@ tdStack *stack_merge(tdStack *s1, tdStack *s2)
 
     return merge;
 }
+
+// Создание итератора стека
+StackIterator *stack_iterator_create(tdStack *s, int index)
+{
+    if ((index < 0) || (index > s->size))
+    {
+        puts("Ошибка: недопустимый индекс");
+        return NULL;
+    }
+    StackIterator *it = calloc(1, sizeof(StackIterator));
+    if (it == NULL)
+    {
+        puts("Ошибка выделения памяти");
+        return NULL;
+    }
+
+    it->stack = s;
+    it->current = s->head;
+    while (index > 0)
+    {
+        it->current = it->current->next;
+        index--;
+    }
+
+    return it;
+}
+
+// Получение данных итератором
+void *stack_iterator_next(StackIterator *it)
+{
+    if (it->current == NULL)
+    {
+        printf("Итератор %p дошёл до конца\n", it);
+        return NULL;
+    }
+
+    void *temp = it->current->data;
+    it->current = it->current->next;
+
+    return temp;
+}
+
+// Проверка стека итератора
+bool stack_iterator_check_stack(StackIterator *it, tdStack *s)
+{
+    return it->stack == s;
+}
+
+// Проверка на равенство итераторов
+bool stack_iterator_is_equal(StackIterator *it1, StackIterator *it2)
+{
+    return (it1->stack == it2->stack) && (it1->current == it2->current);
+}

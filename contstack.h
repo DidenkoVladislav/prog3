@@ -21,6 +21,13 @@ typedef struct
     int size;     // Размер стека
 } tdStack;
 
+// Структура итератора
+typedef struct
+{
+    tdStack *stack;
+    tdNode *current;
+} StackIterator;
+
 // Прототипы
 
 tdStack *stack_create(void);
@@ -36,5 +43,10 @@ tdStack *stack_copy(tdStack *orig);
 tdStack *stack_merge(tdStack *s1, tdStack *s2);
 
 void stack_free(tdStack *s);
+
+StackIterator *stack_iterator_create(tdStack *s, int index);
+void *stack_iterator_next(StackIterator *it);
+bool stack_iterator_check_stack(StackIterator *it, tdStack *s);
+bool stack_iterator_is_equal(StackIterator *it1, StackIterator *it2);
 
 #endif

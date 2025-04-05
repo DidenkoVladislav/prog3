@@ -76,10 +76,29 @@ int main(void)
     puts("Выведем стек s3");
     stack_print(s3);
 
+    puts("");
+
+    puts("Создадим итератор для s3 it1 указывающий на начало");
+    StackIterator *it1 = stack_iterator_create(s3, 0);
+    puts("Используем его");
+    printf("%p\n", stack_iterator_next(it1));
+    puts("Используем ещё 2 раза");
+    printf("%p\n", stack_iterator_next(it1));
+    printf("%p\n", stack_iterator_next(it1));
+
+    puts("");
+
+    puts("Создадим итератор для s1 it2 указывающий на начало");
+    StackIterator *it2 = stack_iterator_create(s1, 0);
+    puts("Сравним it1 и it2");
+    printf("it1 == it2: %d\n", stack_iterator_is_equal(it1, it2));
+
     // Освобождение памяти
     stack_free(s1);
     stack_free(s2);
     stack_free(s3);
+    free(it1);
+    free(it2);
 
     return EXIT_SUCCESS;
 }
