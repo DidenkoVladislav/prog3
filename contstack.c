@@ -142,25 +142,15 @@ void stack_free(tdStack *s)
 // Копирование стека
 tdStack *stack_copy(tdStack *orig)
 {
-    tdStack *temp = stack_create();
     tdStack *copy = stack_create();
 
-    // Копирование в временный стек
-    while (!stack_is_empty(orig))
+    tdNode *curr = orig->head;
+    while (curr)
     {
-        void *d = stack_dequeue(orig);
-        stack_fenqueue(temp, d);
+        void *d = curr->data;
+        stack_enqueue(copy, d);
+        curr = curr->next;
     }
-
-    // Копирование в копию стека и возвращение в оригинал
-    while (!stack_is_empty(temp))
-    {
-        void *d = stack_dequeue(temp);
-        stack_fenqueue(orig, d);
-        stack_fenqueue(copy, d);
-    }
-
-    free(temp);
 
     return copy;
 }
