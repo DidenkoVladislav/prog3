@@ -155,3 +155,27 @@ tdStack *stack_copy(tdStack *orig)
 
     return copy;
 }
+
+// Слияние двух стеков
+tdStack *stack_merge(tdStack *s1, tdStack *s2)
+{
+    tdStack *merge = stack_create();
+
+    tdNode *curr = s1->head;
+    while (curr)
+    {
+        void *d = curr->data;
+        stack_enqueue(merge, d);
+        curr = curr->next;
+    }
+
+    curr = s2->head;
+    while (curr)
+    {
+        void *d = curr->data;
+        stack_enqueue(merge, d);
+        curr = curr->next;
+    }
+
+    return merge;
+}

@@ -69,9 +69,17 @@ int main(void)
     puts("Выведем стек s2");
     stack_print(s2);
 
+    puts("");
+
+    puts("Произведём слияние очереди s1 и s2 в s3");
+    tdStack *s3 = stack_merge(s1, s2);
+    puts("Выведем стек s3");
+    stack_print(s3);
+
     // Освобождение памяти
     stack_free(s1);
     stack_free(s2);
+    stack_free(s3);
 
     return EXIT_SUCCESS;
 }

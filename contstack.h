@@ -33,6 +33,7 @@ void *stack_peek(tdStack *s);
 void stack_clear(tdStack *s);
 void stack_fenqueue(tdStack *s, void *d);
 tdStack *stack_copy(tdStack *orig);
+tdStack *stack_merge(tdStack *s1, tdStack *s2);
 
 void stack_free(tdStack *s);
 
