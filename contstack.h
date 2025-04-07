@@ -34,6 +34,7 @@ tdStack *stack_create(void);
 void stack_enqueue(tdStack *s, void *d);
 void stack_print(tdStack *s);
 void *stack_dequeue(tdStack *s);
+void *stack_pop(tdStack *s);
 bool stack_is_empty(tdStack *s);
 int stack_size(tdStack *s);
 void *stack_peek(tdStack *s);

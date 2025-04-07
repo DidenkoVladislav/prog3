@@ -57,13 +57,38 @@ void *stack_dequeue(tdStack *s)
 {
     if (stack_is_empty(s))
     {
-        // printf("Стек пуст\n");
+        printf("Стек пуст\n");
         return NULL;
     }
     tdNode *temp = s->head;
     void *data = temp->data;
     s->head = s->head->next;
     free(temp);
+    s->size--;
+    return data;
+}
+
+// Удаление элемента из конца стека
+void *stack_pop(tdStack *s)
+{
+    if (stack_is_empty(s))
+    {
+        printf("Стек пуст\n");
+        return NULL;
+    }
+
+    int size = s->size;
+    tdNode *temp = s->tail;
+    void *data = temp->data;
+    free(temp);
+    temp = s->head;
+    while (size > 2)
+    {
+        temp = temp->next;
+        size--;
+    }
+    temp->next = NULL;
+    s->tail = temp;
     s->size--;
     return data;
 }

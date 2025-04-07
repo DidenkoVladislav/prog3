@@ -3,13 +3,14 @@
 
 int main(void)
 {
-    Matrix2d *mat1, *mat2, *mat3, *mat4;
+    Matrix2d *mat1, *mat2, *mat3, *mat4, *mat5;
 
     // Создание Matrix2d
     mat1 = matrix2d_default_constructor();
     mat2 = matrix2d_default_constructor();
     mat3 = matrix2d_default_constructor();
     mat4 = matrix2d_default_constructor();
+    mat5 = matrix2d_default_constructor();
 
     // Создание стека
     printf("Создадим стек s1 - ");
@@ -48,6 +49,20 @@ int main(void)
 
     puts("");
 
+    puts("Добавим элемент в стек s1");
+    stack_enqueue(s1, mat4);
+    puts("Cтек s1");
+    stack_print(s1);
+
+    puts("");
+
+    puts("Возьмём последний элемент стека s1");
+    printf("%p\n", stack_pop(s1));
+    puts("Cтек s1");
+    stack_print(s1);
+
+    puts("");
+
     printf("Создадим копию стека s1 s2");
     tdStack *s2 = stack_copy(s1);
     puts("Выведем оригинальный стек s1");
@@ -73,7 +88,7 @@ int main(void)
     puts("");
 
     puts("Добавим элемент в стек s2");
-    stack_enqueue(s2, mat4);
+    stack_enqueue(s2, mat5);
     puts("Выведем стек s2");
     stack_print(s2);
 
@@ -118,6 +133,7 @@ int main(void)
     destroy_matrix2d(mat2, 1);
     destroy_matrix2d(mat3, 1);
     destroy_matrix2d(mat4, 1);
+    destroy_matrix2d(mat5, 1);
 
     return EXIT_SUCCESS;
 }
