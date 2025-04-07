@@ -116,6 +116,17 @@ void *stack_peek(tdStack *s)
     return s->head->data;
 }
 
+// Просмотр последнего элемента
+void *stack_peek_last(tdStack *s)
+{
+    if (stack_is_empty(s))
+    {
+        printf("Стек пуст\n");
+        return NULL;
+    }
+    return s->tail->data;
+}
+
 // Очистка стека
 void stack_clear(tdStack *s)
 {

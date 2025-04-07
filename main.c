@@ -56,6 +56,11 @@ int main(void)
 
     puts("");
 
+    puts("Выведем последний элемент стека s1");
+    printf("%p\n", stack_peek_last(s1));
+
+    puts("");
+
     puts("Возьмём последний элемент стека s1");
     printf("%p\n", stack_pop(s1));
     puts("Cтек s1");

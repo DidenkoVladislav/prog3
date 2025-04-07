@@ -38,6 +38,7 @@ void *stack_pop(tdStack *s);
 bool stack_is_empty(tdStack *s);
 int stack_size(tdStack *s);
 void *stack_peek(tdStack *s);
+void *stack_peek_last(tdStack *s);
 void stack_clear(tdStack *s);
 void stack_fenqueue(tdStack *s, void *d);
 tdStack *stack_copy(tdStack *orig);
