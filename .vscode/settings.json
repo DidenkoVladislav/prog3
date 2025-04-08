@@ -3,5 +3,10 @@
         "editor.formatOnSave": true,
         "editor.formatOnType": true,
         "files.insertFinalNewline": true
+    },
+    "files.associations": {
+        "stdio.h": "c",
+        "contqueue.h": "c",
+        "matrix2d.h": "c"
     }
 }

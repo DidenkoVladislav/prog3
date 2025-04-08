@@ -1,9 +1,9 @@
-#include "contstack.h"
+#include "contqueue.h"
 #include "matrix2d.h"
 
 int main(void)
 {
-    Matrix2d *mat1, *mat2, *mat3, *mat4, *mat5;
+    Matrix2d *mat1, *mat2, *mat3, *mat4, *mat5, *mat6;
 
     // Создание Matrix2d
     mat1 = matrix2d_default_constructor();
@@ -11,134 +11,172 @@ int main(void)
     mat3 = matrix2d_default_constructor();
     mat4 = matrix2d_default_constructor();
     mat5 = matrix2d_default_constructor();
+    mat6 = matrix2d_default_constructor();
 
-    // Создание стека
-    printf("Создадим стек s1 - ");
-    tdStack *s1 = stack_create();
-    printf("%p\n", s1);
+    // Создание очереди
+    printf("Создадим очередь q1 - ");
+    tdQueue *q1 = queue_create();
+    printf("%p\n", q1);
 
-    puts("Попробуем взять элемент из пустого стека s1");
-    stack_peek(s1);
-
-    puts("");
-
-    puts("Добавим 2 элемента в стек s1");
-    stack_enqueue(s1, mat1);
-    stack_enqueue(s1, mat2);
-    puts("Выведем стек s1");
-    stack_print(s1);
+    puts("Попробуем взять элемент из пустой очереди q1");
+    queue_peek(q1);
 
     puts("");
 
-    puts("Добавим элемент в начало стека s1");
-    stack_fenqueue(s1, mat3);
-    puts("Cтек s1");
-    stack_print(s1);
+    puts("Добавим 2 элемента в очередь q1");
+    queue_enqueue(q1, mat1);
+    queue_enqueue(q1, mat2);
+    puts("Выведем очередь q1");
+    queue_print(q1);
 
     puts("");
 
-    puts("Выведем первый элемент стека s1");
-    printf("%p\n", stack_peek(s1));
+    puts("Добавим элемент в начало очереди q1");
+    queue_fenqueue(q1, mat3);
+    puts("Очередь q1");
+    queue_print(q1);
 
     puts("");
 
-    puts("Возьмём первый элемент стека s1");
-    printf("%p\n", stack_dequeue(s1));
-    puts("Cтек s1");
-    stack_print(s1);
+    puts("Выведем первый элемент очереди q1");
+    printf("%p\n", queue_peek(q1));
 
     puts("");
 
-    puts("Добавим элемент в стек s1");
-    stack_enqueue(s1, mat4);
-    puts("Cтек s1");
-    stack_print(s1);
+    puts("Возьмём первый элемент очереди q1");
+    printf("%p\n", queue_dequeue(q1));
+    puts("Очередь q1");
+    queue_print(q1);
 
     puts("");
 
-    puts("Выведем последний элемент стека s1");
-    printf("%p\n", stack_peek_last(s1));
+    puts("Добавим элемент в очередь q1");
+    queue_enqueue(q1, mat4);
+    puts("Очередь q1");
+    queue_print(q1);
 
     puts("");
 
-    puts("Возьмём последний элемент стека s1");
-    printf("%p\n", stack_pop(s1));
-    puts("Cтек s1");
-    stack_print(s1);
+    puts("Выведем последний элемент очереди q1");
+    printf("%p\n", queue_peek_last(q1));
 
     puts("");
 
-    printf("Создадим копию стека s1 s2");
-    tdStack *s2 = stack_copy(s1);
-    puts("Выведем оригинальный стек s1");
-    stack_print(s1);
-    puts("Выведем скопированный стек s2");
-    stack_print(s2);
+    puts("Возьмём последний элемент очереди q1");
+    printf("%p\n", queue_pop(q1));
+    puts("Очередь q1");
+    queue_print(q1);
 
     puts("");
 
-    puts("Удалим элемент из стека s1");
-    stack_dequeue(s1);
-    puts("Стек s1");
-    stack_print(s1);
-    puts("Стек s2");
-    stack_print(s2);
+    puts("Создадим копию очереди q1 q2");
+    tdQueue *q2 = queue_copy(q1);
+    puts("Выведем оригинальный очередь q1");
+    queue_print(q1);
+    puts("Выведем скопированный очередь q2");
+    queue_print(q2);
 
     puts("");
 
-    puts("Очистим стек s2");
-    stack_clear(s2);
-    stack_print(s2);
+    puts("Удалим элемент из очереди q1");
+    queue_dequeue(q1);
+    puts("Очередь q1");
+    queue_print(q1);
+    puts("Очередь q2");
+    queue_print(q2);
 
     puts("");
 
-    puts("Добавим элемент в стек s2");
-    stack_enqueue(s2, mat5);
-    puts("Выведем стек s2");
-    stack_print(s2);
+    puts("Очистим очередь q2");
+    queue_clear(q2);
+    queue_print(q2);
 
     puts("");
 
-    puts("Произведём слияние очереди s1 и s2 в s3");
-    tdStack *s3 = stack_merge(s1, s2);
-    puts("Выведем стек s3");
-    stack_print(s3);
+    puts("Добавим элемент в очередь q2");
+    queue_enqueue(q2, mat5);
+    puts("Выведем очередь q2");
+    queue_print(q2);
 
     puts("");
 
-    puts("Создадим итератор для s3 it1 указывающий на начало");
-    StackIterator *it1 = stack_iterator_create(s3, 0);
-    puts("Используем его");
-    printf("%p\n", stack_iterator_next(it1));
+    puts("Произведём слияние стеков q1 и q2 в q3");
+    tdQueue *q3 = queue_merge(q1, q2);
+    puts("Выведем очередь q3");
+    queue_print(q3);
+
+    puts("");
+
+    puts("Создадим итераторы для q3 it1 и it2 указывающие на начало");
+    QueueIterator *it1 = queue_iterator_create(q3, 0);
+    QueueIterator *it2 = queue_iterator_create(q3, 0);
+    printf("Итератор it1 указывает на q2: %d\n", queue_iterator_check_queue(it1, q2));
+    printf("Итератор it1 указывает на q3: %d\n", queue_iterator_check_queue(it1, q3));
+    printf("Итератор it1 равен итератору it2: %d\n", queue_iterator_is_equal(it1, it2));
+    puts("Используем итератор it1 и выведем элемент");
+    printf("%p\n", queue_iterator_next(it1));
+    printf("Итератор it1 равен итератору it2: %d\n", queue_iterator_is_equal(it1, it2));
     puts("Используем ещё 2 раза");
-    printf("%p\n", stack_iterator_next(it1));
-    printf("%p\n", stack_iterator_next(it1));
+    printf("%p\n", queue_iterator_next(it1));
+    printf("%p\n", queue_iterator_next(it1));
 
     puts("");
 
-    puts("Создадим итератор для s1 it2 указывающий на начало");
-    StackIterator *it2 = stack_iterator_create(s1, 0);
-    puts("Сравним it1 и it2");
-    printf("it1 == it2: %d\n", stack_iterator_is_equal(it1, it2));
+    puts("Создадим итератор для q1 it3 указывающий на начало");
+    QueueIterator *it3 = queue_iterator_create(q1, 0);
+    puts("Сравним it2 и it3");
+    printf("it2 == it3: %d\n", queue_iterator_is_equal(it2, it3));
 
     puts("");
 
-    puts("Получим структуру Matrix2d из итератора it2 и выведем её");
-    Matrix2d *mattest = stack_iterator_next(it2);
+    puts("Получим структуру Matrix2d из итератора it3 и выведем её");
+    Matrix2d *mattest = queue_iterator_next(it3);
     printf("%p\n", mattest);
     show_matrix2d(mattest);
 
+    puts("");
+
+    puts("Создадим очереди q4 и q5");
+    tdQueue *q4 = queue_create();
+    tdQueue *q5 = queue_create();
+    queue_print(q4);
+    queue_print(q5);
+
+    puts("");
+
+    puts("Сольём их в q6");
+    tdQueue *q6 = queue_merge(q4, q5);
+    queue_print(q6);
+
+    puts("");
+
+    puts("Добавим элемент в q6");
+    queue_enqueue(q6, mat6);
+    queue_print(q6);
+
+    puts("");
+
+    puts("Сольём q6 и q5 в q7");
+    tdQueue *q7 = queue_merge(q6, q5);
+    queue_print(q7);
+
     // Освобождение памяти
-    stack_free(s1);
-    stack_free(s2);
-    stack_free(s3);
+    queue_free(q1);
+    queue_free(q2);
+    queue_free(q3);
+    queue_free(q4);
+    queue_free(q5);
+    queue_free(q6);
+    queue_free(q7);
     free(it1);
     free(it2);
+    free(it3);
     destroy_matrix2d(mat1, 1);
     destroy_matrix2d(mat2, 1);
     destroy_matrix2d(mat3, 1);
     destroy_matrix2d(mat4, 1);
     destroy_matrix2d(mat5, 1);
+    destroy_matrix2d(mat6, 1);
 
     return EXIT_SUCCESS;
 }
