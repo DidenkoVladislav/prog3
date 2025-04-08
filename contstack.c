@@ -1,18 +1,23 @@
 #include "contstack.h"
 
-// Создание пустого стека
-tdStack *stack_create(void)
+// Создание пустого очереди
+tdQueue *queue_create(void)
 {
-    tdStack *s = calloc(1, (size_t)(sizeof(tdStack) * sqrt(2)));
-    s->head = NULL;
-    s->tail = NULL;
-    s->size = 0;
-    return s;
+    tdQueue *q = calloc(1, sizeof(tdQueue));
+    q->head = NULL;
+    q->tail = NULL;
+    q->size = 0;
+    return q;
 }
 
-// Добавление элемента в конец стека
-void stack_enqueue(tdStack *s, void *d)
+// Добавление элемента в конец очереди
+void queue_enqueue(tdQueue *q, void *d)
 {
+    if (q->size >= MAX_QUEUE_SIZE)
+    {
+        puts("Ошибка очередь заполнена");
+        return;
+    }
     tdNode *new_node = calloc(1, sizeof(tdNode));
     if (new_node == NULL)
     {
@@ -21,30 +26,30 @@ void stack_enqueue(tdStack *s, void *d)
     }
     new_node->data = d;
     new_node->next = NULL;
-    if (s->tail == NULL)
+    if (q->tail == NULL)
     {
-        s->head = new_node;
-        s->tail = new_node;
+        q->head = new_node;
+        q->tail = new_node;
     }
     else
     {
-        s->tail->next = new_node;
-        s->tail = new_node;
+        q->tail->next = new_node;
+        q->tail = new_node;
     }
-    s->size++;
-    printf("%p добавлен в стек %p\n", d, s);
+    q->size++;
+    printf("%p добавлен в очередь %p\n", d, q);
 }
 
-// Вывод стека
-void stack_print(tdStack *s)
+// Вывод очереди
+void queue_print(tdQueue *q)
 {
-    printf("Стек %p\n", s);
-    if (stack_is_empty(s))
+    printf("Очередь %p\n", q);
+    if (queue_is_empty(q))
     {
-        puts("Стек пуст");
+        puts("Очередь пуста");
         return;
     }
-    tdNode *curr = s->head;
+    tdNode *curr = q->head;
     while (curr)
     {
         printf("%p\n", curr->data);
@@ -52,99 +57,104 @@ void stack_print(tdStack *s)
     }
 }
 
-// Удаление элемента из начала стека
-void *stack_dequeue(tdStack *s)
+// Удаление элемента из начала очереди
+void *queue_dequeue(tdQueue *q)
 {
-    if (stack_is_empty(s))
+    if (queue_is_empty(q))
     {
-        printf("Стек пуст\n");
+        printf("Очередь пуста\n");
         return NULL;
     }
-    tdNode *temp = s->head;
+    tdNode *temp = q->head;
     void *data = temp->data;
-    s->head = s->head->next;
+    q->head = q->head->next;
     free(temp);
-    s->size--;
+    q->size--;
     return data;
 }
 
-// Удаление элемента из конца стека
-void *stack_pop(tdStack *s)
+// Удаление элемента из конца очереди
+void *queue_pop(tdQueue *q)
 {
-    if (stack_is_empty(s))
+    if (queue_is_empty(q))
     {
-        printf("Стек пуст\n");
+        printf("Очередь пуста\n");
         return NULL;
     }
 
-    int size = s->size;
-    tdNode *temp = s->tail;
+    int size = q->size;
+    tdNode *temp = q->tail;
     void *data = temp->data;
     free(temp);
-    temp = s->head;
+    temp = q->head;
     while (size > 2)
     {
         temp = temp->next;
         size--;
     }
     temp->next = NULL;
-    s->tail = temp;
-    s->size--;
+    q->tail = temp;
+    q->size--;
     return data;
 }
 
 // Проверка на пустоту
-bool stack_is_empty(tdStack *s)
+bool queue_is_empty(tdQueue *q)
 {
-    return s->head == NULL;
+    return q->head == NULL;
 }
 
-// Получение размера стека
-int stack_size(tdStack *s)
+// Получение размера очереди
+int queue_size(tdQueue *q)
 {
-    return s->size;
+    return q->size;
 }
 
 // Просмотр первого элемента
-void *stack_peek(tdStack *s)
+void *queue_peek(tdQueue *q)
 {
-    if (stack_is_empty(s))
+    if (queue_is_empty(q))
     {
-        printf("Стек пуст\n");
+        printf("Очередь пуста\n");
         return NULL;
     }
-    return s->head->data;
+    return q->head->data;
 }
 
 // Просмотр последнего элемента
-void *stack_peek_last(tdStack *s)
+void *queue_peek_last(tdQueue *q)
 {
-    if (stack_is_empty(s))
+    if (queue_is_empty(q))
     {
-        printf("Стек пуст\n");
+        printf("Очередь пуста\n");
         return NULL;
     }
-    return s->tail->data;
+    return q->tail->data;
 }
 
-// Очистка стека
-void stack_clear(tdStack *s)
+// Очистка очереди
+void queue_clear(tdQueue *q)
 {
-    tdNode *curr = s->head;
+    tdNode *curr = q->head;
     while (curr)
     {
         tdNode *temp = curr;
         curr = curr->next;
         free(temp);
     }
-    s->head = NULL;
-    s->tail = NULL;
-    s->size = 0;
+    q->head = NULL;
+    q->tail = NULL;
+    q->size = 0;
 }
 
-// Добавление элемента в начало стека
-void stack_fenqueue(tdStack *s, void *d)
+// Добавление элемента в начало очереди
+void queue_fenqueue(tdQueue *q, void *d)
 {
+    if (q->size >= MAX_QUEUE_SIZE)
+    {
+        puts("Ошибка очередь заполнена");
+        return;
+    }
     tdNode *new_node = calloc(1, sizeof(tdNode));
     if (new_node == NULL)
     {
@@ -152,40 +162,40 @@ void stack_fenqueue(tdStack *s, void *d)
         return;
     }
     new_node->data = d;
-    new_node->next = s->head;
-    s->head = new_node;
-    if (s->tail == NULL)
+    new_node->next = q->head;
+    q->head = new_node;
+    if (q->tail == NULL)
     {
-        s->tail = new_node;
+        q->tail = new_node;
     }
-    s->size++;
-    printf("%p добавлен в стек %p\n", d, s);
+    q->size++;
+    printf("%p добавлен в очередь %p\n", d, q);
 }
 
 // Освобождение памяти
-void stack_free(tdStack *s)
+void queue_free(tdQueue *q)
 {
-    tdNode *curr = s->head;
+    tdNode *curr = q->head;
     while (curr)
     {
         tdNode *temp = curr;
         curr = curr->next;
         free(temp);
     }
-    free(s);
+    free(q);
     // q = NULL;
 }
 
-// Копирование стека
-tdStack *stack_copy(tdStack *orig)
+// Копирование очереди
+tdQueue *queue_copy(tdQueue *orig)
 {
-    tdStack *copy = stack_create();
+    tdQueue *copy = queue_create();
 
     tdNode *curr = orig->head;
     while (curr)
     {
         void *d = curr->data;
-        stack_enqueue(copy, d);
+        queue_enqueue(copy, d);
         curr = curr->next;
     }
 
@@ -193,46 +203,46 @@ tdStack *stack_copy(tdStack *orig)
 }
 
 // Слияние двух стеков
-tdStack *stack_merge(tdStack *s1, tdStack *s2)
+tdQueue *queue_merge(tdQueue *q1, tdQueue *q2)
 {
-    tdStack *merge = stack_create();
+    tdQueue *merge = queue_create();
 
-    tdNode *curr = s1->head;
+    tdNode *curr = q1->head;
     while (curr)
     {
         void *d = curr->data;
-        stack_enqueue(merge, d);
+        queue_enqueue(merge, d);
         curr = curr->next;
     }
 
-    curr = s2->head;
+    curr = q2->head;
     while (curr)
     {
         void *d = curr->data;
-        stack_enqueue(merge, d);
+        queue_enqueue(merge, d);
         curr = curr->next;
     }
 
     return merge;
 }
 
-// Создание итератора стека
-StackIterator *stack_iterator_create(tdStack *s, int index)
+// Создание итератора очереди
+QueueIterator *queue_iterator_create(tdQueue *q, int index)
 {
-    if ((index < 0) || (index > s->size))
+    if ((index < 0) || (index > q->size))
     {
         puts("Ошибка: недопустимый индекс");
         return NULL;
     }
-    StackIterator *it = calloc(1, sizeof(StackIterator));
+    QueueIterator *it = calloc(1, sizeof(QueueIterator));
     if (it == NULL)
     {
         puts("Ошибка выделения памяти");
         return NULL;
     }
 
-    it->stack = s;
-    it->current = s->head;
+    it->queue = q;
+    it->current = q->head;
     while (index > 0)
     {
         it->current = it->current->next;
@@ -243,7 +253,7 @@ StackIterator *stack_iterator_create(tdStack *s, int index)
 }
 
 // Получение данных итератором
-void *stack_iterator_next(StackIterator *it)
+void *queue_iterator_next(QueueIterator *it)
 {
     if (it->current == NULL)
     {
@@ -257,14 +267,14 @@ void *stack_iterator_next(StackIterator *it)
     return temp;
 }
 
-// Проверка стека итератора
-bool stack_iterator_check_stack(StackIterator *it, tdStack *s)
+// Проверка очереди итератора
+bool queue_iterator_check_queue(QueueIterator *it, tdQueue *q)
 {
-    return it->stack == s;
+    return it->queue == q;
 }
 
 // Проверка на равенство итераторов
-bool stack_iterator_is_equal(StackIterator *it1, StackIterator *it2)
+bool queue_iterator_is_equal(QueueIterator *it1, QueueIterator *it2)
 {
-    return (it1->stack == it2->stack) && (it1->current == it2->current);
+    return (it1->queue == it2->queue) && (it1->current == it2->current);
 }

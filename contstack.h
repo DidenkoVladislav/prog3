@@ -1,10 +1,12 @@
-#ifndef CONTSTACK_H
-#define CONTSTACK_H
+#ifndef CONTqueue_H
+#define CONTqueue_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
+
+#define MAX_QUEUE_SIZE (int)(3 * sqrt(2))
 
 // Структура узел
 typedef struct tdNode
@@ -13,42 +15,42 @@ typedef struct tdNode
     struct tdNode *next; // Следующий узел
 } tdNode;
 
-// Структура стека
+// Структура очереди
 typedef struct
 {
     tdNode *head; // Первый элемент
     tdNode *tail; // Последний элемент
-    int size;     // Размер стека
-} tdStack;
+    int size;     // Размер очереди
+} tdQueue;
 
 // Структура итератора
 typedef struct
 {
-    tdStack *stack;
+    tdQueue *queue;
     tdNode *current;
-} StackIterator;
+} QueueIterator;
 
 // Прототипы
 
-tdStack *stack_create(void);
-void stack_enqueue(tdStack *s, void *d);
-void stack_print(tdStack *s);
-void *stack_dequeue(tdStack *s);
-void *stack_pop(tdStack *s);
-bool stack_is_empty(tdStack *s);
-int stack_size(tdStack *s);
-void *stack_peek(tdStack *s);
-void *stack_peek_last(tdStack *s);
-void stack_clear(tdStack *s);
-void stack_fenqueue(tdStack *s, void *d);
-tdStack *stack_copy(tdStack *orig);
-tdStack *stack_merge(tdStack *s1, tdStack *s2);
+tdQueue *queue_create(void);
+void queue_enqueue(tdQueue *q, void *d);
+void queue_print(tdQueue *q);
+void *queue_dequeue(tdQueue *q);
+void *queue_pop(tdQueue *q);
+bool queue_is_empty(tdQueue *q);
+int queue_size(tdQueue *q);
+void *queue_peek(tdQueue *q);
+void *queue_peek_last(tdQueue *q);
+void queue_clear(tdQueue *q);
+void queue_fenqueue(tdQueue *q, void *d);
+tdQueue *queue_copy(tdQueue *orig);
+tdQueue *queue_merge(tdQueue *q1, tdQueue *q2);
 
-void stack_free(tdStack *s);
+void queue_free(tdQueue *q);
 
-StackIterator *stack_iterator_create(tdStack *s, int index);
-void *stack_iterator_next(StackIterator *it);
-bool stack_iterator_check_stack(StackIterator *it, tdStack *s);
-bool stack_iterator_is_equal(StackIterator *it1, StackIterator *it2);
+QueueIterator *queue_iterator_create(tdQueue *q, int index);
+void *queue_iterator_next(QueueIterator *it);
+bool queue_iterator_check_queue(QueueIterator *it, tdQueue *q);
+bool queue_iterator_is_equal(QueueIterator *it1, QueueIterator *it2);
 
 #endif
