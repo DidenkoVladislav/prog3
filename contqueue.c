@@ -3,7 +3,12 @@
 // Создание пустой очереди
 tdQueue *queue_create(void)
 {
-    tdQueue *q = calloc(1, sizeof(tdQueue));
+    tdQueue *q = malloc(sizeof(tdQueue));
+    if (q == NULL)
+    {
+        puts("Ошибка выделения памяти");
+        return NULL;
+    }
     q->head = NULL;
     q->tail = NULL;
     q->size = 0;
