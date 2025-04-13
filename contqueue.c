@@ -78,31 +78,6 @@ void *queue_dequeue(tdQueue *q)
     return data;
 }
 
-// Удаление элемента из конца очереди
-void *queue_pop(tdQueue *q)
-{
-    if (queue_is_empty(q))
-    {
-        printf("Очередь пуста\n");
-        return NULL;
-    }
-
-    int size = q->size;
-    tdNode *temp = q->tail;
-    void *data = temp->data;
-    free(temp);
-    temp = q->head;
-    while (size > 2)
-    {
-        temp = temp->next;
-        size--;
-    }
-    temp->next = NULL;
-    q->tail = temp;
-    q->size--;
-    return data;
-}
-
 // Проверка на пустоту
 bool queue_is_empty(tdQueue *q)
 {

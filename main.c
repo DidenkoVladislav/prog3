@@ -66,8 +66,8 @@ int main(void)
 
     puts("");
 
-    puts("Возьмём последний элемент очереди q1");
-    printf("%p\n", queue_pop(q1));
+    puts("Возьмём элемент очереди q1");
+    printf("%p\n", queue_dequeue(q1));
     puts("Очередь q1");
     queue_print(q1);
 

@@ -36,7 +36,6 @@ tdQueue *queue_create(void);
 void queue_enqueue(tdQueue *q, void *d);
 void queue_print(tdQueue *q);
 void *queue_dequeue(tdQueue *q);
-void *queue_pop(tdQueue *q);
 bool queue_is_empty(tdQueue *q);
 int queue_size(tdQueue *q);
 void *queue_peek(tdQueue *q);
