@@ -17,8 +17,11 @@ int main(void)
     printf("Создадим очередь q1 - ");
     tdQueue *q1 = queue_create();
     printf("%p\n", q1);
+    printf("Очередь пуста: %d\n", queue_is_empty(q1));
 
     puts("Попробуем взять элемент из пустой очереди q1");
+    queue_dequeue(q1);
+    puts("Попробуем вывести элемент из пустой очереди q1");
     queue_peek(q1);
 
     puts("");
@@ -26,6 +29,7 @@ int main(void)
     puts("Добавим 2 элемента в очередь q1");
     queue_enqueue(q1, mat1);
     queue_enqueue(q1, mat2);
+    printf("Размер очереди q1: %d\n", queue_size(q1));
     puts("Выведем очередь q1");
     queue_print(q1);
 
@@ -69,11 +73,11 @@ int main(void)
 
     puts("");
 
-    puts("Создадим копию очереди q1 q2");
+    puts("Создадим копию очереди q1 - q2");
     tdQueue *q2 = queue_copy(q1);
-    puts("Выведем оригинальный очередь q1");
+    puts("Выведем очередь q1");
     queue_print(q1);
-    puts("Выведем скопированный очередь q2");
+    puts("Выведем очередь q2");
     queue_print(q2);
 
     puts("");
@@ -90,6 +94,8 @@ int main(void)
     puts("Очистим очередь q2");
     queue_clear(q2);
     queue_print(q2);
+    puts("Выведем очередь q1");
+    queue_print(q1);
 
     puts("");
 
@@ -97,42 +103,15 @@ int main(void)
     queue_enqueue(q2, mat5);
     puts("Выведем очередь q2");
     queue_print(q2);
+    puts("Выведем очередь q1");
+    queue_print(q1);
 
     puts("");
 
-    puts("Произведём слияние стеков q1 и q2 в q3");
+    puts("Произведём слияние очередей q1 и q2 в q3");
     tdQueue *q3 = queue_merge(q1, q2);
     puts("Выведем очередь q3");
     queue_print(q3);
-
-    puts("");
-
-    puts("Создадим итераторы для q3 it1 и it2 указывающие на начало");
-    QueueIterator *it1 = queue_iterator_create(q3, 0);
-    QueueIterator *it2 = queue_iterator_create(q3, 0);
-    printf("Итератор it1 указывает на q2: %d\n", queue_iterator_check_queue(it1, q2));
-    printf("Итератор it1 указывает на q3: %d\n", queue_iterator_check_queue(it1, q3));
-    printf("Итератор it1 равен итератору it2: %d\n", queue_iterator_is_equal(it1, it2));
-    puts("Используем итератор it1 и выведем элемент");
-    printf("%p\n", queue_iterator_next(it1));
-    printf("Итератор it1 равен итератору it2: %d\n", queue_iterator_is_equal(it1, it2));
-    puts("Используем ещё 2 раза");
-    printf("%p\n", queue_iterator_next(it1));
-    printf("%p\n", queue_iterator_next(it1));
-
-    puts("");
-
-    puts("Создадим итератор для q1 it3 указывающий на начало");
-    QueueIterator *it3 = queue_iterator_create(q1, 0);
-    puts("Сравним it2 и it3");
-    printf("it2 == it3: %d\n", queue_iterator_is_equal(it2, it3));
-
-    puts("");
-
-    puts("Получим структуру Matrix2d из итератора it3 и выведем её");
-    Matrix2d *mattest = queue_iterator_next(it3);
-    printf("%p\n", mattest);
-    show_matrix2d(mattest);
 
     puts("");
 
@@ -159,6 +138,35 @@ int main(void)
     puts("Сольём q6 и q5 в q7");
     tdQueue *q7 = queue_merge(q6, q5);
     queue_print(q7);
+
+    puts("");
+
+    puts("Создадим итераторы для q3 - it1 и it2 указывающие на начало");
+    QueueIterator *it1 = queue_iterator_create(q3, 0);
+    QueueIterator *it2 = queue_iterator_create(q3, 0);
+    printf("Итератор it1 указывает на q2: %d\n", queue_iterator_check_queue(it1, q2));
+    printf("Итератор it1 указывает на q3: %d\n", queue_iterator_check_queue(it1, q3));
+    printf("Итератор it1 равен итератору it2: %d\n", queue_iterator_is_equal(it1, it2));
+    puts("Используем итератор it1 и выведем элемент");
+    printf("%p\n", queue_iterator_next(it1));
+    printf("Итератор it1 равен итератору it2: %d\n", queue_iterator_is_equal(it1, it2));
+    puts("Используем ещё 2 раза");
+    printf("%p\n", queue_iterator_next(it1));
+    printf("%p\n", queue_iterator_next(it1));
+
+    puts("");
+
+    puts("Создадим итератор для q1 - it3 указывающий на начало");
+    QueueIterator *it3 = queue_iterator_create(q1, 0);
+    puts("Сравним it2 и it3");
+    printf("it2 == it3: %d\n", queue_iterator_is_equal(it2, it3));
+
+    puts("");
+
+    puts("Получим структуру Matrix2d из итератора it3 и выведем её");
+    Matrix2d *mattest = queue_iterator_next(it3);
+    printf("%p\n", mattest);
+    show_matrix2d(mattest);
 
     // Освобождение памяти
     queue_free(q1);
